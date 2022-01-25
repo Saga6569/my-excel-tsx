@@ -1,0 +1,18 @@
+.App {
+  border-spacing: 1px 1px;
+}
+
+table {
+  table-layout: auto;
+  width: auto;
+}
+th, td {
+  border: 2px solid #69c;
+  padding: auto 20px;
+  width: auto;
+}
+
+.item {
+  width: 40px;
+  height: 40px;
+}
