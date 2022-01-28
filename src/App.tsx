@@ -59,7 +59,7 @@ const Table: React.FC<any> = (props) => {
          return cell;
        })
       }
-      return el
+      return el;
     })
     setTable(newTable);
   };
@@ -75,7 +75,7 @@ const Table: React.FC<any> = (props) => {
          return cell;
        })
       }
-      return el
+      return el;
     })
     setTable(newTable);
   };
@@ -116,13 +116,10 @@ const Table: React.FC<any> = (props) => {
 
 const App: React.FC = () => {
   
-  
   const [size, setSize] = useState({ width: 0, height: 0 }); //  создание наччальных значений хука с созданием размеров таблицы
-
   const { width, height } = size;
 
   // создание компонента  отвечающего за создание данных для  создание таблицы
-
     const form =  (<div className="App">    
         <p>
           <label>Ширина таблицы </label>
