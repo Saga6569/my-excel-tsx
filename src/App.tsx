@@ -1,12 +1,47 @@
 import React, { useState, useEffect} from 'react';
 
-const arrEN = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']; //  массив из которого берутся букенные кардинаты
+const arrEN = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']; //  массив из которого берутся буквенные кардиналы
 
-const Table: React.FC<any> = (props) => {
-  
-  const {height, width} = props.option;  // извлекаю из пропса  дынные
-   
-  const creatingCoordinatesDigits = (a: number) => { /// создает числовой массив длинной получаемого числа  
+
+const ContextMeny = (props: { state: {top: number, left: number}; }) => {
+
+const initPoint = props.state // Начально значение точек 
+
+const [point, setPoint] = useState(initPoint) // Создаем хук с начальными значениями 
+
+const {top, left} = point
+
+useEffect((): void => { // Эффект срабатывается если данные пропса меняются 
+  setPoint(initPoint)
+}, [props]);
+
+
+if (top === 0 && left === 0) { // Если координаты равны 0, то  нечего  не показываем
+  return null
+}
+
+// Создаем компонент  с нужными  свойствами
+  const context =  (
+    <ul className="right-click-menu.active" style={{'top': `${top}px`, 'left': `${left}px`, 'margin': 0, 'padding': 0, 'position': 'absolute', background: '#C0C0C0', opacity: .7}}>
+        <ol> <button >{'1'}</button></ol>
+        <ol> <button>разморозить</button></ol>
+        <ol> <button>отчистить</button></ol>
+        <ol> <button>задать type</button></ol>
+    </ul>)
+
+  return (
+    context
+  )
+};
+
+const Table = (props: {option: {height: number, width: number}}) => {
+
+  const [point, setPoint] = useState({top: 0, left: 0})
+
+  const {height, width} = props.option;  // Извлекаю из пропса дынные
+
+  const creatingCoordinatesDigits = (a: number) => { // Создает числовой массив длинной получаемого числа  
+
     const result: Array<number> = [];
     for (let i = 1; i <= a; i++) {
       result[i - 1] = i;
@@ -14,13 +49,13 @@ const Table: React.FC<any> = (props) => {
     return result;
   };
 
-  const initialLetterCoordinates: Array<string> = arrEN.slice(0, width);  // создаем  массви кубвенных кардинат (пример width = 3 [A, B, C])
-  const initialDigitCoordinates: Array<number> = creatingCoordinatesDigits(height); // создаем  массви числовых кординат (пример height = 3 [1, 2, 3])
+  const initialLetterCoordinates: Array<string> = arrEN.slice(0, width);  // Создаем  массив буквенных координат (пример width = 3 [A, B, C])
+  const initialDigitCoordinates: Array<number> = creatingCoordinatesDigits(height); // Создаем  массив числовых координат (пример height = 3 [1, 2, 3])
   
-  const [letterCoordinates, setLetterCoordinates] = useState(initialLetterCoordinates); // задаем начальное значение хукам 
-  const [digitCoordinates, setDigitCoordinates] = useState(initialDigitCoordinates); // задаем начальное значение хукам 
+  const [letterCoordinates, setLetterCoordinates] = useState(initialLetterCoordinates); // Задаем начальное значение хукам 
+  const [digitCoordinates, setDigitCoordinates] = useState(initialDigitCoordinates); // Задаем начальное значение хукам 
 
-  const createTable  = digitCoordinates.map((number) => {   //  создается  нумерованная колеция объектов с указание номером итерации и буквой 
+  const createTable  = digitCoordinates.map((number) => { // Создается  нумерованная коллекция объектов с указанием номером итерации и буквой  
     const lineNumber = number;
       const cells = letterCoordinates.map((tab) => {
         const iLetter = tab;
@@ -33,14 +68,14 @@ const Table: React.FC<any> = (props) => {
     return {lineNumber, cells};
   });
 
-  const [table, setTable] = useState(createTable); // устанавливаем начальео  значение
+  const [table, setTable] = useState(createTable); // Устанавливаем начально значение
 
-  useEffect((): void => { // эфект  срабатывается  если даные пропса меняются 
+  useEffect((): void => { // Эффект  срабатывается если данные пропса меняются 
     setLetterCoordinates(initialLetterCoordinates);
     setDigitCoordinates(initialDigitCoordinates);
   }, [props]);
 
-  useEffect((): void => {   // эфект срабатывает  если меняется значение одного из массива кардинат
+  useEffect((): void => {   // Эффект срабатывает  если меняется значение одного из массива координат
     setTable(createTable);
   }, [letterCoordinates, digitCoordinates]);
   
@@ -48,7 +83,7 @@ const Table: React.FC<any> = (props) => {
     return (<div>{'задате данные для таблицы'}</div>)
   }
 
-  const handleChange = (option: { iLetter: string; keyNumber: number; text?: string; state?: string; }) => (e: { target: { value: string; }; }) => { // это  событие  перезаписывает данные в ячейку
+  const handleChange = (option: { iLetter: string; keyNumber: number; text?: string; state?: string; }) => (e: { target: { value: string; }; }) => { // Событие  перезаписывает данные в ячейку
     const {iLetter, keyNumber} = option;
     const newTable = table.map((el) => {
       if (el.lineNumber === keyNumber) {
@@ -64,7 +99,7 @@ const Table: React.FC<any> = (props) => {
     setTable(newTable);
   };
 
-  const handleLooc = (option: { iLetter: string; keyNumber: number; text?: string; state?: string; }) => (e: React.MouseEvent) => {  // событие двойного клика которая блокирует ячейку для изменения 
+  const handleLooc = (option: { iLetter: string; keyNumber: number; text?: string; state?: string; }) => (e: React.MouseEvent) => {  // Событие двойного клика которая блокирует ячейку для изменения 
     const {iLetter, keyNumber} = option;
     const newTable = table.map((el) => {
       if (el.lineNumber === keyNumber) {
@@ -77,50 +112,61 @@ const Table: React.FC<any> = (props) => {
       }
       return el;
     })
+   
     setTable(newTable);
   };
 
-  const handlerAddLetterCoordinates = () => {  // событие добавляет новую букву  в систему кардинат [A, B, C] => [A, B, C, D]
+  const handlerAddLetterCoordinates = () => {  // Событие добавляет новую букву  в систему координат [A, B, C] => [A, B, C, D]
     const newLetters = arrEN.slice(0, letterCoordinates.length + 1);
     return setLetterCoordinates(newLetters);
   };
   
-  const handlerAddDigitCoordinates  = () => { // событие добавляет новую число в систему кардинат [1, 2, 3] => [1, 2, 3, 4]
+  const handlerAddDigitCoordinates  = () => { // Событие добавляет новую числовую в систему координат [1, 2, 3] => [1, 2, 3, 4]
     const newArr = [...digitCoordinates, digitCoordinates[digitCoordinates.length - 1] + 1];
     setDigitCoordinates(newArr);
   };
- 
-  const iterCell = () => {   // отрисовка таблицы
+  
+  const hedlerClikcOpenContextMenu = (el: any) => (e: any) => { // Событие правый клик
+    e.preventDefault();
+    setPoint({top:e.clientY, left: e.clientX})
+  };
+
+  const iterCell = () => { // Отрисовка таблицы
+    
     const collorCell = (status: string) => status === 'open' ? {border: 'solid #69c'} : {border: 'solid red'}
     return (
       table.map((el) => {
-        return <tr>
+        return <tr> 
                 <th>{el.lineNumber}</th>
                 {(el.cells).map((el) => <td style={collorCell(el.state)}>
-                 <input className='item' onChange={handleChange(el)} onDoubleClick={handleLooc(el)} type="text" value={el.text}></input>
+                 <input className='item' onClick={() => setPoint({top: 0, left: 0})} onContextMenu={hedlerClikcOpenContextMenu(el)}  onChange={handleChange(el)} onDoubleClick={handleLooc(el)} type="text" value={el.text}></input>
                 </td>)}
              </tr>
      }))
    };
    
-    return (<div className="App">
+    return (
+      <><div className='context'>
+        {<ContextMeny state={point} />}
+      </div>
+        <div className="table">
         <tr>
-        <th>{'N/N'}</th>
+          <th>{'N/N'}</th>
           {letterCoordinates.map((el) => <th>{el}</th>)}
           <button onClick={handlerAddLetterCoordinates}>{'+'}</button>
         </tr>
         {iterCell()}
         <button onClick={handlerAddDigitCoordinates}>{'+'}</button>
-    </div>)
+      </div></>)
 };
 
 const App: React.FC = () => {
-  
-  const [size, setSize] = useState({ width: 0, height: 0 }); //  создание наччальных значений хука с созданием размеров таблицы
+
+  const [size, setSize] = useState({ width: 0, height: 0 }); //  Создание начальных значений хука с созданием размеров таблицы
   const { width, height } = size;
 
-  // создание компонента  отвечающего за создание данных для  создание таблицы
-    const form =  (<div className="App">    
+  // Создание компонента  отвечающего за создание данных для создания таблицы
+    const form =  (<div className="form">    
         <p>
           <label>Ширина таблицы </label>
           <input onChange={(e) => setSize({height, width: Number(e.target.value)})} name="width" type="number"  value={width}></input> 
@@ -131,12 +177,14 @@ const App: React.FC = () => {
         </p> 
       </div>);
 
+
     return (
-      <div>
+     <><div className='conext'></div>
+     <div className='creat-table'>
         {form}
         {<Table option={size}></Table>}
-      </div>
+      </div></>
     );
   };
-
+  
 export default App;
