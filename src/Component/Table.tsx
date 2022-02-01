@@ -62,7 +62,7 @@ const Table= () => {
     setTable(newTable);
   };
 
-  const handleLooc = (option: { iLetter: any; keyNumber: any; }) => () => {  // событие двойного клика которая блокирует ячейку для изменения 
+  const handleLooc = (option: any) => () => {  // событие двойного клика которая блокирует ячейку для изменения 
     const {iLetter, keyNumber} = option;
     const newTable = table.map((el: { lineNumber: any; cells: any[]; }) => {
       if (el.lineNumber === keyNumber) {
