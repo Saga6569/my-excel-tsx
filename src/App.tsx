@@ -5,7 +5,7 @@ import Table from './Component/Table';
 import ContextMenu from './Component/ContextMenu';
 import {UserContext} from './Context/Context'
 
-export const Application = () => {
+export const App = () => {
 
   const [tableSize, setTableSize] = useState({});
   const tableSizeСhange = useMemo(() => ({ tableSize, setTableSize }), [tableSize]);
@@ -18,7 +18,7 @@ export const Application = () => {
 
   return (
     <div onClick={() => setCoordinates({})}>
-    <UserContext.Provider value={{ tableSizeСhange, tableСhange, coordinatesСhange}}>
+    <UserContext.Provider value = {{ tableSizeСhange, tableСhange, coordinatesСhange }}>
       <Imput />
       <Table />
       <ContextMenu />
@@ -27,7 +27,7 @@ export const Application = () => {
   );
 };
 
-export default Application;
+export default App;
 
 
 
