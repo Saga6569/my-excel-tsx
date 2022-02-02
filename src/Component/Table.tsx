@@ -39,9 +39,9 @@ const Table = () => {
     return (<div>{'задате данные для таблицы'}</div>)
   }
 
-  const handleChange = (option: any) => (e: { target: { value: any; }; }) => { // Это событие  перезаписывает данные в ячейку
+  const handleChange = (option: any) => (e: { target: { value: string; }; }) => { // Это событие  перезаписывает данные в ячейку
     const {iLetter, keyNumber} = option;
-    const newTable = state.table.map((el: { lineNumber: any; cells: any[]; }) => {
+    const newTable = state.table.map((el: { lineNumber: string; cells: any[]; }) => {
       if (el.lineNumber === keyNumber) {
         el.cells.map((cell) => {
           if (cell.iLetter === iLetter) {
@@ -57,7 +57,7 @@ const Table = () => {
 
   const handleLooc = (option: any) => () => {  // Событие двойного клика которая блокирует ячейку для изменения 
     const {iLetter, keyNumber} = option;
-    const newTable = state.table.map((el: { lineNumber: any; cells: any[]; }) => {
+    const newTable = state.table.map((el: { lineNumber: string; cells: any[]; }) => {
       if (el.lineNumber === keyNumber) {
         el.cells.map((cell) => {
           if (cell.iLetter === iLetter) {
@@ -75,7 +75,7 @@ const Table = () => {
 
 
 
-  const hendlerContextMenu = (el: any) => (e: { preventDefault: () => void; clientY: any; clientX: any; }) => {
+  const hendlerContextMenu = (el: {}) => (e: { preventDefault: () => void; clientY: number; clientX: number; }) => {
     e.preventDefault();
     const top = `${e.clientY}px`;
     const left = `${e.clientX}px`;
@@ -97,10 +97,10 @@ const Table = () => {
   const iterCell = () => { // отрисовка таблицы
     const collorCell = (status: string) => status === 'open' ? {border: 'solid #69c'} : {border: 'solid red'};
     return (
-      state.table.map((el: { lineNumber: number; cells: any; }) => {
+      state.table.map((el: { lineNumber: string; cells: any; }) => {
         return <tr> 
                   <th>{el.lineNumber}</th>
-                  {(el.cells).map((el: { state?: any; text?: any; iLetter?: any; keyNumber?: any; }) => <td style={collorCell(el.state)}>
+                  {(el.cells).map((el: { state?: any; text?: string; iLetter?: number; keyNumber?: string; }) => <td style={collorCell(el.state)}>
                   <input className='item' onContextMenu={hendlerContextMenu(el)} onChange={handleChange(el)} onDoubleClick={handleLooc(el)} type="text" value={el.text}></input>
                   </td>)}
              </tr>

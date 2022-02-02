@@ -10,9 +10,9 @@ const ContextMenu = () => {
   const left = state.coordinates.left ?? 0;
   const el = state.coordinates.el ?? {};
 
-  const handleClikc = (el: { iLetter: any; keyNumber: any; }) => () => { // Событие отчищает ячейку
+  const handleClikc = (el: { iLetter: number; keyNumber: string; }) => () => { // Событие отчищает ячейку
     const {iLetter, keyNumber} = el;
-    const newTable = state.table.map((el: { lineNumber: any; cells: any[]; }) => {
+    const newTable = state.table.map((el: { lineNumber: string; cells: any[]; }) => {
       if (el.lineNumber === keyNumber) {
         el.cells.map((cell) => {
           if (cell.iLetter === iLetter) {
@@ -26,9 +26,9 @@ const ContextMenu = () => {
     setState({...state, table: newTable});
   };
 
-  const handleLooc = (el: { iLetter: any; keyNumber: any; }) => () => { // Событие блокирует ячейку 
+  const handleLooc = (el: { iLetter: number; keyNumber: string; }) => () => { // Событие блокирует ячейку 
     const {iLetter, keyNumber} = el;
-    const newTable = state.table.map((el: { lineNumber: any; cells: any[]; }) => {
+    const newTable = state.table.map((el: { lineNumber: string; cells: any[]; }) => {
       if (el.lineNumber === keyNumber) {
         el.cells.map((cell) => {
           if (cell.iLetter === iLetter) {
