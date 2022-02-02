@@ -1,34 +1,14 @@
 import  { createContext } from 'react';
 
-// interface context{
-//   tableSizeСhange: {
-//     tableSize: object,
-//     setTableSize: () => any
-//   },
-//   tableСhange: {
-//     table: Array<object>,
-//     setTable: () => any
-//   },
-//   coordinatesСhange: {
-//     coordinates: object,
-//     setCoordinates: ()  => any
-//   }
-// };
-
-
 export const UserContext = createContext<any>({
-  tableSizeСhange: {
-    tableSize : {},
-    setTableSize: () => {},
-  },
-  tableСhange : {
+  state: {
+    tableSize : {
+      width: 0,
+      height: 0
+    },
     table: [],
-    setTable: () => {},
-  },
-  coordinatesСhange: {
     coordinates : {},
-    setCoordinates: () => {},
-  }
+    setState: () => {},
+  },
 });
-
 

@@ -9,6 +9,6 @@ const Init  = () => {
     </React.StrictMode>,
     document.getElementById('root')
   );
-}
+};
 
 Init();
