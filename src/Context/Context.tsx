@@ -18,9 +18,6 @@ interface context {
   setState: setState;
 }
 
-
-
-
 export const UserContext = createContext<context>({
   state: {
     tableSize : {
