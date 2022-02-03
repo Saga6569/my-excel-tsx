@@ -79,7 +79,7 @@ const Table = () => {
   setState({...state, table: newTable});
   };
 
-  const hendlerContextMenu = (cell: cell) => (e: { preventDefault: () => void; clientY: number; clientX: number; }) => {
+  const hendlerContextMenu = (cell: cell) => (e: { preventDefault: () => void; clientY: number; clientX: number; }) => { //Событие правого клика которое записывает элемент и координаты для всплытия окна 
     e.preventDefault();
     const top = `${e.clientY}px`;
     const left = `${e.clientX}px`;
