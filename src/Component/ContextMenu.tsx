@@ -1,43 +1,49 @@
 import { useContext } from 'react';
 import {UserContext} from '../Context/Context'
 
-const ContextMenu = () => {
+interface cell{
+  iLetter?: string;
+  keyNumber?: number;
+  text?: string;
+  status?: string;
+}
 
-  const {state, setState } = useContext(UserContext);
+const ContextMenu = () => {
+  const {state, setState} = useContext(UserContext);
 
   // Извлекаем нужные данные
   const top = state.coordinates.top ?? 0;
   const left = state.coordinates.left ?? 0;
   const el = state.coordinates.el ?? {};
 
-  const handleClikc = (el: { iLetter: number; keyNumber: string; }) => () => { // Событие отчищает ячейку
+  const handleClikc = (el: cell) => () => { // Событие отчищает ячейку
     const {iLetter, keyNumber} = el;
-    const newTable = state.table.map((el: { lineNumber: string; cells: any[]; }) => {
-      if (el.lineNumber === keyNumber) {
-        el.cells.map((cell) => {
+    const newTable = state.table.map((lineCells: { lineNumber: number; cells: Array<{}> }) => {
+      if (lineCells.lineNumber === keyNumber) {
+        lineCells.cells.map((cell: cell) => {
           if (cell.iLetter === iLetter) {
-            cell.state === 'open' ?  cell.text = '' : alert('ячейка заблокирована для изменения')
+            cell.status === 'open' ?  cell.text = '' : alert('ячейка заблокирована для изменения')
           };
           return cell;
         });
       };
-      return el;
+      return lineCells;
     })
     setState({...state, table: newTable});
   };
 
-  const handleLooc = (el: { iLetter: number; keyNumber: string; }) => () => { // Событие блокирует ячейку 
+  const handleLooc = (el: cell) => () => { // Событие блокирует ячейку 
     const {iLetter, keyNumber} = el;
-    const newTable = state.table.map((el: { lineNumber: string; cells: any[]; }) => {
-      if (el.lineNumber === keyNumber) {
-        el.cells.map((cell) => {
+    const newTable = state.table.map((lineCells: { lineNumber: number; cells: Array<{}> }) => {
+      if (lineCells.lineNumber === keyNumber) {
+        lineCells.cells.map((cell: cell) => {
           if (cell.iLetter === iLetter) {
-            cell.state === 'open' ? cell.state = 'looc' : cell.state = 'open';
+            cell.status === 'open' ? cell.status = 'looc' : cell.status = 'open';
           };
           return cell;
         });
       }
-      return el;
+      return lineCells;
     })
     setState({...state, table: newTable});
   };

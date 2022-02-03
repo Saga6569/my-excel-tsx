@@ -1,7 +1,7 @@
 import React, { useContext} from 'react';
 import {UserContext} from '../Context/Context'
 
-const Imput: React.FC = () => {
+const Imput = () => {
   const {state, setState } = useContext(UserContext);
   const { width, height } = state.tableSize;
   const form =  (<div className="form">

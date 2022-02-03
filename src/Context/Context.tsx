@@ -1,14 +1,39 @@
 import  { createContext } from 'react';
 
-export const UserContext = createContext<any>({
+type setState = (value: any) => typeof value;
+
+interface context {
   state: {
     tableSize : {
+      height: number;
+      width: number;
+    },
+    table: Array< { lineNumber: number; cells: Array<{}> }>,
+    coordinates : {
+      left: number;
+      top: number;
+      el: {}
+    },
+  }
+  setState: setState;
+}
+
+
+
+
+export const UserContext = createContext<context>({
+  state: {
+    tableSize : {
+      height: 0,
       width: 0,
-      height: 0
     },
     table: [],
-    coordinates : {},
-    setState: () => {},
+    coordinates : {
+      left: 0,
+      top: 0,
+      el: {}
+    },
   },
+  setState: () => {},
 });
 
