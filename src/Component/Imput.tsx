@@ -7,11 +7,11 @@ const Imput = () => {
   const form =  (<div className="form">
          <p>
            <label>Ширина таблицы </label>
-           <input name="width" onChange={(e) => setState({...state, tableSize: {width: Number(e.target.value), height}})} type="number"  value={width ?? 0}></input>
+           <input name="width" onChange={(e) => setState({...state, tableSize: {width: Number(e.target.value), height}})} type="number"  value={width}></input>
          </p>
          <p>
            <label>Высота таблицы </label>
-           <input name="height" onChange={(e) => setState({...state, tableSize: {height: Number(e.target.value), width}})} type="number" value={height ?? 0 }></input>
+           <input name="height" onChange={(e) => setState({...state, tableSize: {height: Number(e.target.value), width}})} type="number" value={height}></input>
          </p>
        </div>);
        

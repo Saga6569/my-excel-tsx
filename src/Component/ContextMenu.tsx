@@ -12,9 +12,9 @@ const ContextMenu = () => {
   const {state, setState} = useContext(UserContext);
 
   // Извлекаем нужные данные
-  const top = state.coordinates.top ?? 0;
-  const left = state.coordinates.left ?? 0;
-  const el = state.coordinates.el ?? {};
+  const top = state.coordinates.top;
+  const left = state.coordinates.left;
+  const el = state.coordinates.el;
 
   const handleClikc = (el: cell) => () => { // Событие отчищает ячейку
     const {iLetter, keyNumber} = el;

@@ -12,7 +12,6 @@ const arrEN = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 
 
 const Table = () => {
   const {state, setState } = useContext(UserContext);
-
   const {height, width} = state.tableSize;
 
   const creatingCoordinatesDigits = (num: number) => { // Создает числовой массив длинной получаемого числа
@@ -87,13 +86,13 @@ const Table = () => {
   }
 
   const handlerAddLetterCoordinates = (e: { stopPropagation: () => void; }) => { // Событие добавляет новую букву в систему координат [A, B, C] => [A, B, C, D]
-    const newWidth = (state.tableSize.width ?? 0) + 1;
+    const newWidth = state.tableSize.width + 1;
     e.stopPropagation();
     setState({...state, tableSize: {width: newWidth, height: height}});
   };
   
   const handlerAddDigitCoordinates  = (e: { stopPropagation: () => void; }) => { // Событие добавляет новую числовую в систему координат [1, 2, 3] => [1, 2, 3, 4]
-    const newHeight = (state.tableSize.height ?? 0)+ 1;
+    const newHeight = state.tableSize.height + 1;
     e.stopPropagation();
     setState({...state, tableSize:{width, height: newHeight}});
   };

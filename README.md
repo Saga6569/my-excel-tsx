@@ -1,6 +1,9 @@
 
 https://exel-tsx.herokuapp.com
 
+
+<a href="https://codeclimate.com/github/Saga6569/my-excel-tsx/maintainability"><img src="https://api.codeclimate.com/v1/badges/7695112b83f8d86aa40a/maintainability" /></a>
+
 ## Available Scripts
 
 In the project directory, you can run:
