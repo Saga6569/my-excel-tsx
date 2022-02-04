@@ -1,6 +1,6 @@
 import  { createContext } from 'react';
 
-type setState = (value: any) => typeof value;
+type setState = (value: any) => void;
 
 interface context {
   state: {

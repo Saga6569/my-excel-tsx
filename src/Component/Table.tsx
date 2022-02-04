@@ -85,17 +85,20 @@ const Table = () => {
     setState({...state, coordinates:{top, left, el: cell}});
   }
 
-  const handlerAddLetterCoordinates = (e: { stopPropagation: () => void; }) => { // Событие добавляет новую букву в систему координат [A, B, C] => [A, B, C, D]
-    const newWidth = state.tableSize.width + 1;
+  const addCoordinates = (name: string) => (e: { stopPropagation: () => void; }) => { // Событие добавляет новую букву в систему координат [A, B, C] => [A, B, C, D]
     e.stopPropagation();
-    setState({...state, tableSize: {width: newWidth, height: height}});
+    if (name === 'width') {
+      setState({...state, tableSize: {width: width + 1, height: height}});
+      return;
+    }
+    setState({...state, tableSize: {width: width , height: height + 1}});
   };
   
-  const handlerAddDigitCoordinates  = (e: { stopPropagation: () => void; }) => { // Событие добавляет новую числовую в систему координат [1, 2, 3] => [1, 2, 3, 4]
-    const newHeight = state.tableSize.height + 1;
-    e.stopPropagation();
-    setState({...state, tableSize:{width, height: newHeight}});
-  };
+  // const handlerAddDigitCoordinates  = (e: { stopPropagation: () => void; }) => { // Событие добавляет новую числовую в систему координат [1, 2, 3] => [1, 2, 3, 4]
+  //   const newHeight = state.tableSize.height + 1;
+  //   e.stopPropagation();
+  //   setState({...state, tableSize:{width, height: newHeight}});
+  // };
 
   const iterCell = () => { // отрисовка таблицы
     const collorCell = (cell: cell) => cell.status === 'open' ? {border: 'solid #69c'} : {border: 'solid red'};
@@ -116,10 +119,10 @@ const Table = () => {
       <tr>
         <th>{'N/N'}</th>
         {letterCoordinates.map((el) => <th key={el}>{el}</th>)}
-        <button onClick={handlerAddLetterCoordinates}>{'+'}</button>
+        <button onClick={addCoordinates('width')}>{'+'}</button>
       </tr>
       {iterCell()}
-      <button onClick={handlerAddDigitCoordinates}>{'+'}</button>
+      <button onClick={addCoordinates('height')}>{'+'}</button>
     </div>
   );
 };

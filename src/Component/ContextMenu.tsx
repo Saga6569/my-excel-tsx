@@ -6,7 +6,7 @@ interface cell{
   keyNumber?: number;
   text?: string;
   status?: string;
-}
+};
 
 const ContextMenu = () => {
   const {state, setState} = useContext(UserContext);
