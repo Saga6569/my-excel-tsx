@@ -1,6 +1,6 @@
 import './index.css'
 import {useState } from "react";
-import Imput from './Component/Imput';
+import Input from './Component/Input';
 import Table from './Component/Table';
 import ContextMenu from './Component/ContextMenu';
 import {UserContext} from './Context/Context'
@@ -11,7 +11,7 @@ export const App = () => {
   return (
     <UserContext.Provider value = {{state, setState}}>
       <div onClick={() => Object.keys(state.coordinates).length === 0 ? null : setState({...state, coordinates: {top: 0, left: 0, el: {}}})}>
-        <Imput />
+        <Input />
         <Table />
         <ContextMenu />
       </div>

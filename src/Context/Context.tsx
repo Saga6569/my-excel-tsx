@@ -1,8 +1,8 @@
 import  { createContext } from 'react';
 
-type setState = (value: any) => void;
+type TsetState = (value: any) => typeof value;
 
-interface context {
+interface Icontext {
   state: {
     tableSize : {
       height: number;
@@ -15,10 +15,10 @@ interface context {
       el: {}
     },
   }
-  setState: setState;
+  setState: TsetState;
 }
 
-export const UserContext = createContext<context>({
+export const UserContext = createContext<Icontext>({
   state: {
     tableSize : {
       height: 0,

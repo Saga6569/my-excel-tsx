@@ -1,38 +1,43 @@
-import { useContext, useEffect} from 'react';
-import {UserContext} from '../Context/Context'
+import { useContext, useEffect } from 'react';
+import { UserContext } from '../Context/Context'
 
-interface cell{
+interface IelTable{
   iLetter?: string;
   keyNumber?: number;
   text?: string;
   status?: string;
+};
+
+interface IlineCells{
+  lineNumber: number; 
+  cells: Array<{}>;
 }
 
-const arrEN = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']; //  массив из которого берутся букенные кардинаты
+const arrEN = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']; //Массив из которого берутся буквенные координаты
 
 const Table = () => {
-  const {state, setState } = useContext(UserContext);
+  const {state, setState} = useContext(UserContext);
   const {height, width} = state.tableSize;
 
-  const creatingCoordinatesDigits = (num: number) => { // Создает числовой массив длинной получаемого числа
+  const creatingCoordinatesDigits = (number: number) => { // Создает числовой массив длинной получаемого числа
     const result = [];
-      for (let i = 1; i <= num; i++) {
+      for (let i = 1; i <= number; i++) {
         result[i - 1] = i;
       };
     return result;
   };
 
-  const letterCoordinates = arrEN.slice(0, width );  // Создаем  массив буквенных координат (пример width = 3 [A, B, C])
+  const letterСoordinates  = arrEN.slice(0, width );  // Создаем  массив буквенных координат (пример width = 3 [A, B, C])
   const digitCoordinates = creatingCoordinatesDigits(height); // Создаем  массив числовых координат (пример height = 3 [1, 2, 3])
 
   useEffect(() => {
     setState({...state, table: createTable})
   },[height, width]);
 
-  const createTable  = digitCoordinates.map((number) => { // Создается нумерованная колляция объектов с указанием номером итерации и буквой
+  const createTable  = digitCoordinates.map((number) => { // Создается нумерованная коллекция объектов с указанием номером итерации и буквой
     const lineNumber = number;
-      const cells = letterCoordinates.map((tab) => {
-        const iLetter = tab;
+      const cells = letterСoordinates.map((letter) => {
+        const iLetter = letter;
         const keyNumber = number;
         const text = '';
         const status = 'open';
@@ -46,15 +51,15 @@ const Table = () => {
     return (<div>{'задате данные для таблицы'}</div>)
   }
 
-  const handleChange = (cell: cell) => (e: { target: { value: string; }; }) => { // Это событие  перезаписывает данные в ячейку
-    const {iLetter, keyNumber} = cell;
-    const newTable = state.table.map((lineCells: { lineNumber: number; cells: Array<{}> }) => {
+  const handleChange = (elTable: IelTable) => (e: { target: { value: string; }; }) => { // Это событие перезаписывает данные в ячейку
+    const {iLetter, keyNumber} = elTable;
+    const newTable = state.table.map((lineCells: IlineCells) => {
       if (lineCells.lineNumber === keyNumber) {
-        lineCells.cells.map((cell: cell) => {
-          if (cell.iLetter === iLetter) {
-            cell.status === 'open' ?  cell.text = e.target.value : console.log('ячейка заблокирована для изменения')
+        lineCells.cells.map((elTable: IelTable) => {
+          if (elTable.iLetter === iLetter) {
+            elTable.status === 'open' ?  elTable.text = e.target.value : console.log('ячейка заблокирована для изменения')
           };
-          return cell;
+          return elTable;
         });
       };
       return lineCells;
@@ -62,15 +67,15 @@ const Table = () => {
     setState({...state, table: newTable});
   };
 
-  const handleLooc = (cell: cell) => () => {  // Событие двойного клика которая блокирует ячейку для изменения 
-    const {iLetter, keyNumber} = cell;
-    const newTable = state.table.map((lineCells: { lineNumber: number; cells: Array<{}> }) => {
+  const handleDoubleClick = (elTable: IelTable) => () => {  // Событие двойного клика которая блокирует ячейку для изменения 
+    const {iLetter, keyNumber} = elTable;
+    const newTable = state.table.map((lineCells: IlineCells) => {
       if (lineCells.lineNumber === keyNumber) {
-        lineCells.cells.map((cell: cell) => {
-          if (cell.iLetter === iLetter) {
-            cell.status === 'open' ? cell.status = 'looc' : cell.status = 'open'
+        lineCells.cells.map((elTable: IelTable) => {
+          if (elTable.iLetter === iLetter) {
+            elTable.status === 'open' ? elTable.status = 'looc' : elTable.status = 'open'
           };
-          return cell;
+          return elTable;
         });
       };
       return lineCells;
@@ -78,14 +83,14 @@ const Table = () => {
   setState({...state, table: newTable});
   };
 
-  const hendlerContextMenu = (cell: cell) => (e: { preventDefault: () => void; clientY: number; clientX: number; }) => { //Событие правого клика которое записывает элемент и координаты для всплытия окна 
+  const hendleContextMenu = (elTable: IelTable) => (e: { preventDefault: () => void; clientY: number; clientX: number; }) => { // Событие правого клика которое записывает элемент и координаты для всплытия окна 
     e.preventDefault();
     const top = `${e.clientY}px`;
     const left = `${e.clientX}px`;
-    setState({...state, coordinates:{top, left, el: cell}});
-  }
+    setState({...state, coordinates:{top, left, el: elTable}});
+  };
 
-  const addCoordinates = (name: string) => (e: { stopPropagation: () => void; }) => { // Событие добавляет новую букву в систему координат [A, B, C] => [A, B, C, D]
+  const handleClickAddCordinats = (name: string) => (e: { stopPropagation: () => void; }) => { // Событие добавляет новую букву в систему координат [A, B, C] => [A, B, C, D]
     e.stopPropagation();
     if (name === 'width') {
       setState({...state, tableSize: {width: width + 1, height: height}});
@@ -94,20 +99,14 @@ const Table = () => {
     setState({...state, tableSize: {width: width , height: height + 1}});
   };
   
-  // const handlerAddDigitCoordinates  = (e: { stopPropagation: () => void; }) => { // Событие добавляет новую числовую в систему координат [1, 2, 3] => [1, 2, 3, 4]
-  //   const newHeight = state.tableSize.height + 1;
-  //   e.stopPropagation();
-  //   setState({...state, tableSize:{width, height: newHeight}});
-  // };
-
-  const iterCell = () => { // отрисовка таблицы
-    const collorCell = (cell: cell) => cell.status === 'open' ? {border: 'solid #69c'} : {border: 'solid red'};
+  const iterCell = () => { // Отрисовка таблицы
+    const collorCell = (elTable: IelTable) => elTable.status === 'open' ? {border: 'solid #69c'} : {border: 'solid red'};
     return (
-      state.table.map((lineCells: { lineNumber: number; cells: Array<{}> }) => {
+      state.table.map((lineCells: IlineCells) => {
         return <tr> 
                   <th>{lineCells.lineNumber}</th>
-                  {(lineCells.cells).map((cell: cell) => <td style={collorCell(cell)}>
-                  <input className='item' onContextMenu={hendlerContextMenu(cell)} onChange={handleChange(cell)} onDoubleClick={handleLooc(cell)} type="text" value={cell.text}></input>
+                  {(lineCells.cells).map((elTable: IelTable) => <td style={collorCell(elTable)}>
+                  <input className='item' onContextMenu={hendleContextMenu(elTable)} onChange={handleChange(elTable)} onDoubleClick={handleDoubleClick(elTable)} type="text" value={elTable.text}></input>
                   </td>)}
              </tr>
       })
@@ -118,11 +117,11 @@ const Table = () => {
     <div className="table">
       <tr>
         <th>{'N/N'}</th>
-        {letterCoordinates.map((el) => <th key={el}>{el}</th>)}
-        <button onClick={addCoordinates('width')}>{'+'}</button>
+        {letterСoordinates.map((letter) => <th key={letter}>{letter}</th>)}
+        <button onClick={handleClickAddCordinats('width')}>{'+'}</button>
       </tr>
       {iterCell()}
-      <button onClick={addCoordinates('height')}>{'+'}</button>
+      <button onClick={handleClickAddCordinats('height')}>{'+'}</button>
     </div>
   );
 };
