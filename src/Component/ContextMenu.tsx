@@ -27,7 +27,7 @@ const ContextMenu = () => {
       if (lineCells.lineNumber === keyNumber) {
         lineCells.cells.map((elTable: IelTable) => {
           if (elTable.iLetter === iLetter) {
-            elTable.status === 'open' ?  elTable.text = '' : alert('ячейка заблокирована для изменения')
+            elTable.text = '';
           };
           return elTable;
         });
@@ -53,7 +53,7 @@ const ContextMenu = () => {
     setState({...state, table: newTable});
   };
 
-  const ButtonDeleteText = (elTable: IelTable) => {
+  const ButtonDeleteText = (elTable: IelTable) => { // Функция  проверяет свойство  элемента если и дает  возможные события
     if (elTable.status === 'open') {
       return <button onClick={handleClickDeleteText(elTable)}>отчистить</button>;
     };
