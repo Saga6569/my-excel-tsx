@@ -20,7 +20,7 @@ const ContextMenu = () => {
   const top = state.coordinates.top;
   const left = state.coordinates.left;
   const elTable = state.coordinates.el;
-
+  
   const handleClickDeleteText  = (elTable: IelTable) => () => { // Событие отчищает ячейку
     const {iLetter, keyNumber} = elTable;
     const newTable = state.table.map((lineCells: IlineCells) => {
@@ -37,7 +37,7 @@ const ContextMenu = () => {
     setState({...state, table: newTable});
   };
 
-  const handleCliCcellLock  = (elTable: IelTable) => () => { // Событие блокирует ячейку 
+  const handleClickCcellLock  = (elTable: IelTable) => () => { // Событие блокирует ячейку 
     const {iLetter, keyNumber} = elTable;
     const newTable = state.table.map((lineCells: IlineCells) => {
       if (lineCells.lineNumber === keyNumber) {
@@ -53,7 +53,7 @@ const ContextMenu = () => {
     setState({...state, table: newTable});
   };
 
-  const ButtonDeleteText = (elTable: IelTable) => { // Функция  проверяет свойство  элемента если и дает  возможные события
+  const ButtonDeleteText = (elTable: IelTable) => { // Функция проверяет свойство элемента и дает возможные события
     if (elTable.status === 'open') {
       return <button onClick={handleClickDeleteText(elTable)}>отчистить</button>;
     };
@@ -62,7 +62,7 @@ const ContextMenu = () => {
 
   const context =  (
     <ul className="right-click-menu" style={{ 'top': top, 'left': left, 'margin': 0, 'padding': 0, 'position': 'absolute', background: '#C0C0C0', opacity: .7}}>
-      <ol> <button onClick={handleCliCcellLock(elTable)}>{elTable === 'open' ? 'заморозить' : 'разморозить'}</button></ol>
+      <ol> <button onClick={handleClickCcellLock(elTable)}>{elTable === 'open' ? 'заморозить' : 'разморозить'}</button></ol>
       <ol>{ButtonDeleteText(elTable)}</ol>
   </ul>);
 
